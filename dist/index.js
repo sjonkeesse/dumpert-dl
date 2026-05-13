@@ -10,14 +10,15 @@ if (args.length === 0) {
 }
 // Get the first argument as the URL
 const url = args[0];
-// Parse the URL to extract the selectedId parameter
+// Parse the URL to extract the item ID from the path (/item/<id>)
 let selectedId;
 try {
     const urlObj = new URL(url);
-    selectedId = urlObj.searchParams.get("selectedId");
+    const match = urlObj.pathname.match(/\/item\/([^/]+)/);
+    selectedId = match ? match[1] : null;
     if (!selectedId) {
         console.log(`URL: ${url}`);
-        console.log("No selectedId parameter found in the URL");
+        console.log("No item ID found in the URL (expected format: /item/<id>)");
         process.exit(1);
     }
 }
